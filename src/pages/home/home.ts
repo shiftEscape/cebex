@@ -21,7 +21,7 @@ export class HomePage {
   }
 
   initMap () {
-    let latLng = new google.maps.LatLng(10.315699, 123.885437);
+    let latLng = new google.maps.LatLng(10.310197, 123.893671);
     let mapOptions = {
       center: latLng,
       zoom: 15,
