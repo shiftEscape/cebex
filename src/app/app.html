@@ -1,13 +1,29 @@
 <ion-menu [content]="mycontent">
-    <ion-header>
-      <ion-navbar color="primary">
-        <ion-title>Main Menu</ion-title>
-      </ion-navbar>
-    </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item menuClose detail-none>Close Menu</ion-item>
-    </ion-list>
+  <ion-content class="no-scroll">
+    <div id="profile">
+      <div id="overlay"></div>
+      <div id="profile-image"></div>
+      <div id="profile-info">ALVIN JAMES BELLERO<br>@shiftEscape</div>
+    </div>
+    <div class="nav">
+      <ion-list>
+        <ion-item menuClose>
+          <ion-icon ios="ios-compass" md="md-compass"></ion-icon> Routes
+        </ion-item>
+        <ion-item menuClose>
+          <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon> Bookmarks
+        </ion-item>
+        <ion-item menuClose>
+          <ion-icon ios="ios-document" md="md-document"></ion-icon> Reports
+        </ion-item>
+        <ion-item menuClose>
+          <ion-icon ios="ios-information-circle" md="md-information-circle"></ion-icon> About Us
+        </ion-item>
+        <ion-item menuClose>
+          <ion-icon ios="ios-exit" md="md-exit"></ion-icon> Logout
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-content>
 </ion-menu>
 

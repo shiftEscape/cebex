@@ -9,13 +9,20 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="search"></ion-icon>
-      </button>
+      <ion-searchbar></ion-searchbar>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="no-scroll">
+  <div id="float-panel">
+    Select route to view:&nbsp;&nbsp;
+    <select #routeSelected (change)="displayRoute(routeSelected.value)">
+      <option value="" disabled>Please select</option>
+      <option value="{{route}}" *ngFor="let route of routes | keys">
+        {{ route }}
+      </option>
+    </select>
+  </div>
   <div #map id="map"></div>
 </ion-content>

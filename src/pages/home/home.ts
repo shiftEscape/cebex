@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
 import { Config } from '../../config';
 
 declare var google;
@@ -12,6 +13,7 @@ export class HomePage {
 
   @ViewChild('map') mapElement;
   map: any;
+  routes = Config.routes;
   paths = [];
 
   constructor(public navCtrl: NavController) {
@@ -30,26 +32,67 @@ export class HomePage {
     } return routePath;
   }
 
-  initMap () {
+  clearMapRoutes () {
+    for(var i in this.paths) {
+      this.paths[i].setOptions({ map: null });
+    }
+  }
 
-    // Create Google Map instance
-    let latLng = new google.maps.LatLng(Config.focusMapCoords.lat, Config.focusMapCoords.lng);
+  addMarker() {
+  
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.BOUNCE,
+      position: this.map.getCenter()
+    }); return marker;
+  
+  }
 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  getCoordsCenter (routeCode) {
+    let listCoords = Config.routes[routeCode].coords;
+    let len = listCoords.length;
+    let mean = Math.round(len / 2);
+    return { lat: listCoords[mean][0], lng: listCoords[mean][1] };
+  }
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-    // Display all available routes from config
-    for(var routeCode in Config.routes) {
+  displayRoute (routeCode) {
+      this.clearMapRoutes();
       this.paths[routeCode] = new google.maps.Polyline({
         path: this.mapLatLng(Config.routes[routeCode].coords), strokeColor: Config.routes[routeCode].strokeColor, strokeOpacity: 0.5, strokeWeight: 5
       });
       this.paths[routeCode].setOptions({ map: this.map });
-    }
+      this.map.panTo(this.getCoordsCenter(routeCode));
+  }
+
+  
+
+  initMap () {
+
+    Geolocation.getCurrentPosition().then((position) => {
+
+      // Create Google Map instance
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.addMarker();
+
+    }, (err) => {
+      console.log(err);
+    });
+
+    // Display all available routes from config
+    // for(var routeCode in Config.routes) {
+    //   this.paths[routeCode] = new google.maps.Polyline({
+    //     path: this.mapLatLng(Config.routes[routeCode].coords), strokeColor: Config.routes[routeCode].strokeColor, strokeOpacity: 0.5, strokeWeight: 5
+    //   });
+    //   this.paths[routeCode].setOptions({ map: this.map });
+    // }
   }
 
 }

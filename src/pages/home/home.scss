@@ -3,4 +3,22 @@ page-home {
         height: 100%;
         width: 100%;
     }
+    #float-panel {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 9;
+        background: rgba(0, 0, 0, 0.5);
+        width: 280px;
+        text-align: center;
+        padding: 10px;
+        color: #FFF;
+        border-radius: 3px;
+    }
+    #float-panel select {
+        color: #4c4c4c;
+        padding: 3px 6px;
+        border: none;
+        background: #fcffa3;
+    }
 }
