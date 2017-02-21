@@ -64,7 +64,14 @@ export class HomePage {
       this.map.panTo(this.getCoordsCenter(routeCode));
   }
 
-  
+  setMapCenter () {
+    Geolocation.getCurrentPosition().then((position) => {
+      this.map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+    }, (err) => {
+      console.error(err);
+    });
+  }
+
 
   initMap () {
 
